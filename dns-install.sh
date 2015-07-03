@@ -2,7 +2,7 @@
 
 if [ "$UID" -ne "0" ]
 then
-   echo -e "$ROUGE""Use this script as root."
+   echo -e "Use this script as root."
    exit
 else
 pacman -Sy bind dnsutils

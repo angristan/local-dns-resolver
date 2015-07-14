@@ -1,4 +1,4 @@
-# ArchLinux-DNS-server
+#ArchLinux-DNS-server
 This script with install a local DNS server on you Arch Linux computer, and will directly communicate with the root servers
 
 
@@ -9,10 +9,10 @@ This script with install a local DNS server on you Arch Linux computer, and will
 
 `./dns-install.sh`
 
-## Contact
+##Contact
 
 http://angristan.fr/contact/
 
-## License
+##License
 
 [The unlicense](https://github.com/Angristan/ArchLinux-DNS-server/blob/master/LICENSE) (public domain)

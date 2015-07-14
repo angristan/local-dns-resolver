@@ -8,3 +8,11 @@ This script with install a local DNS server on you Arch Linux computer, and will
 `chmod +x dns-install.sh`
 
 `./dns-install.sh`
+
+## Contact
+
+http://angristan.fr/contact/
+
+## License
+
+[The unlicense](https://github.com/Angristan/ArchLinux-DNS-server/blob/master/LICENSE) (public domain)

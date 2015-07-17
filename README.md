@@ -13,6 +13,6 @@ This script with install a local DNS server on you Arch Linux computer, and will
 
 http://angristan.fr/contact/
 
-## Licence
+## License
 
 [The unlicense](https://github.com/Angristan/ArchLinux-DNS-server/blob/master/LICENSE) (public domain)

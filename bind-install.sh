@@ -13,4 +13,5 @@ else
    echo "nameserver 127.0.0.1" >> /etc/resolv.conf #Set localhost as the DNS resolver
    chattr +i /etc/resolv.conf #Disallow the modification of the file
    systemctl start named && systemctl enable named #Enable named at boot and start it
+   echo "The installation is done."
 fi

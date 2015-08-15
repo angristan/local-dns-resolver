@@ -8,9 +8,9 @@ else
 pacman -Sy bind dnsutils
 wget ftp://ftp.internic.net/domain/named.cache -O /var/named/root.hint #Root servers list
 sed -i 's|file "/var/named/root.hint"|file "root.hint"|' /etc/named.conf
-sudo chattr -i /etc/resolv.conf #Allow the modification of the file
-sed -i 's|nameserver|#nameserver|' /etc/resolv.conf
+chattr -i /etc/resolv.conf #Allow the modification of the file
+sed -i 's|nameserver|#nameserver|' /etc/resolv.conf #Disable previous DNS servers
 echo "nameserver 127.0.0.1" >> /etc/resolv.conf #Set localhost as the DNS resolver
-sudo chattr +i /etc/resolv.conf #Disallow the modification of the file
-sudo systemctl start named && sudo systemctl enable named #Enable named at boot and start it
+chattr +i /etc/resolv.conf #Disallow the modification of the file
+systemctl start named && systemctl enable named #Enable named at boot and start it
 fi

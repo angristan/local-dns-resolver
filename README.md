@@ -1,26 +1,40 @@
-# ArchLinux-DNS-server
-This script with install a local DNS server on you Arch Linux (or Arch-based) computer, and will directly communicate with the root servers securely (using DNSSEC).
+# Linux-DNS-server
+This script with install a local DNS server on you GNU/Linux computer, and will directly communicate with the root servers securely (using DNSSEC).
 
 
 ## Use
 
-You must choose one of the two scripts. You *CAN'T* use them both. 
+All those scripts must be run as root.
 
-They both must be run as root.
+### Arch - Unbound
+`wget https://raw.githubusercontent.com/Angristan/Linux-DNS-server/master/arch-unbound.sh`
 
-### Unbound
-`wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/unbound-install.sh`
+`chmod +x arch-unbound.sh`
 
-`chmod +x unbound-install.sh`
+`./arch-unbound.sh`
 
-`./unbound-install.sh`
+### Arch - BIND
+`wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/arch-bind.sh`
 
-### BIND
-`wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/bind-install.sh`
+`chmod +x arch-bind.sh`
 
-`chmod +x bind-install.sh`
+`./arch-bind.sh`
 
-`./bind-install.sh`
+### Debian - Unbound
+`wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/debian-unbound.sh`
+
+`chmod +x debian-unbound.sh`
+
+`./debian-unbound.sh`
+
+### Ubuntu - Unbound
+`wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/ubuntu-unbound.sh`
+
+`chmod +x ubuntu-unbound.sh`
+
+`./ubuntu-unbound.sh`
+
+Note : you must run `apt-get remove resolvconf ubuntu-minimal` before runnig this script on Ubuntu.
 
 ## Contact / Feedback 
 

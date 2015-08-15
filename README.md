@@ -1,5 +1,5 @@
 # ArchLinux-DNS-server
-This script with install a local DNS server on you Arch Linux (or Arch-based) computer, and will directly communicate with the root servers securely (DNSSEC).
+This script with install a local DNS server on you Arch Linux (or Arch-based) computer, and will directly communicate with the root servers securely (using DNSSEC).
 
 
 ## Use

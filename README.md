@@ -1,8 +1,12 @@
 # ArchLinux-DNS-server
-This script with install a local DNS server on you Arch Linux computer, and will directly communicate with the root servers securely (DNSSEC).
+This script with install a local DNS server on you Arch Linux (or Arch-based) computer, and will directly communicate with the root servers securely (DNSSEC).
 
 
 ## Use
+
+You must choose one of the two scripts. You *CAN'T* use them both. 
+
+They both must be run as root.
 
 ### Unbound
 `wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/unbound-install.sh`

@@ -13,6 +13,13 @@ All those scripts must be run as root.
 
 `./arch-unbound.sh`
 
+### Arch - PowerDNS
+`wget https://raw.githubusercontent.com/Angristan/Linux-DNS-server/master/arch-powerdns.sh`
+
+`chmod +x arch-powerdns.sh`
+
+`./arch-powerdns.sh`
+
 ### Arch - BIND
 `wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/arch-bind.sh`
 

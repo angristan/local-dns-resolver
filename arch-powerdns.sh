@@ -5,7 +5,7 @@ then
    echo "Use this script as root."
    exit 1
 else
-   pacman -Sy powerdns-recursor dnsutils
+   pacman -Sy powerdns-recursor ldns
    chattr -i /etc/resolv.conf #Allow the modification of the file
    sed -i 's|nameserver|#nameserver|' /etc/resolv.conf #Disable previous DNS servers
    echo "nameserver 127.0.0.1" >> /etc/resolv.conf #Set localhost as the DNS resolver

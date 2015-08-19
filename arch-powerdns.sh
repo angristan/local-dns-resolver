@@ -10,6 +10,6 @@ else
    sed -i 's|nameserver|#nameserver|' /etc/resolv.conf #Disable previous DNS servers
    echo "nameserver 127.0.0.1" >> /etc/resolv.conf #Set localhost as the DNS resolver
    chattr +i /etc/resolv.conf #Disallow the modification of the file
-   systemctl start pdns-recursor && systemctl enable pdns-recursor #Enable named at boot and start it
+   systemctl start pdns-recursor && systemctl enable pdns-recursor #Enable pdns-recursor at boot and start it
    echo "The installation is done."
 fi

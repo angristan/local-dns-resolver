@@ -9,6 +9,7 @@ else
 	unbound -c /etc/unbound/unbound.conf
 	unbound-anchor -a "/var/lib/unbound/root.key"
 	echo "access-control: 127.0.0.1 allow" >> /etc/unbound/unbound.conf
+	echo "interface: 127.0.0.1" >> /etc/unbound/unbound.conf
 	service unbound start
 	chattr -i /etc/resolv.conf #Allow the modification of the file
 	sed -i 's|nameserver|#nameserver|' /etc/resolv.conf #Disable previous DNS servers

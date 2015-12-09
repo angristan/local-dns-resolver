@@ -8,8 +8,9 @@ else
   pacman -Sy unbound expat
   wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints #Root servers list
   chmod 666 /etc/unbound/unbound.conf
-  echo '  root-hints: "/etc/unbound/root.hints"' >> /etc/unbound/unbound.conf
-  echo "  interface: 127.0.0.1" >> /etc/unbound/unbound.conf
+  echo 'root-hints: "/etc/unbound/root.hints"' >> /etc/unbound/unbound.conf
+  echo "interface: 127.0.0.1" >> /etc/unbound/unbound.conf
+  echo "access-control: 127.0.0.1 allow" >> /etc/unbound/unbound.conf
   chmod 644 /etc/unbound/unbound.conf
   chattr -i /etc/resolv.conf #Allow the modification of the file
   sed -i 's|nameserver|#nameserver|' /etc/resolv.conf #Disable previous DNS servers

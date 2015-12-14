@@ -27,19 +27,12 @@ All those scripts must be run as root.
 
 `./arch-bind.sh`
 
-### Debian - Unbound
+### Debian / Ubuntu - Unbound
 `wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/debian-unbound.sh`
 
 `chmod +x debian-unbound.sh`
 
 `./debian-unbound.sh`
-
-### Ubuntu - Unbound
-`wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/ubuntu-unbound.sh`
-
-`chmod +x ubuntu-unbound.sh`
-
-`./ubuntu-unbound.sh`
 
 Note : you must run `apt-get remove resolvconf ubuntu-minimal` before runnig this script on Ubuntu.
 

@@ -17,8 +17,11 @@ do-ip6: yes
 do-udp: yes
 do-tcp: yes
 do-daemonize: yes
+num-threads: 2
 use-caps-for-id: yes
-harden-glue: yes" >> /etc/unbound/unbound.conf
+harden-glue: yes
+hide-identity: yes
+hide-version: yes" >> /etc/unbound/unbound.conf
 	service unbound start
 	chattr -i /etc/resolv.conf #Allow the modification of the file
 	sed -i 's|nameserver|#nameserver|' /etc/resolv.conf #Disable previous DNS servers

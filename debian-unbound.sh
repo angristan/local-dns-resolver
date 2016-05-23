@@ -12,10 +12,6 @@ else
 interface: 127.0.0.1
 access-control: 127.0.0.1 allow
 port: 53
-do-ip4: yes
-do-ip6: yes
-do-udp: yes
-do-tcp: yes
 do-daemonize: yes
 num-threads: 2
 use-caps-for-id: yes

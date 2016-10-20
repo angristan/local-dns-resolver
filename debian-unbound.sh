@@ -17,7 +17,8 @@ num-threads: 2
 use-caps-for-id: yes
 harden-glue: yes
 hide-identity: yes
-hide-version: yes" >> /etc/unbound/unbound.conf
+hide-version: yes
+qname-minimisation: yes" >> /etc/unbound/unbound.conf
 	service unbound start
 	chattr -i /etc/resolv.conf #Allow the modification of the file
 	sed -i 's|nameserver|#nameserver|' /etc/resolv.conf #Disable previous DNS servers

@@ -1,4 +1,4 @@
-# Linux-DNS-server
+# Local Linux DNS resolver auto-installer
 This script with install a local DNS server on you GNU/Linux computer, and will directly communicate with the root servers securely (using DNSSEC).
 
 

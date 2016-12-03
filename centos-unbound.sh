@@ -15,12 +15,17 @@ unbound -c /etc/unbound/unbound.conf
 unbound-anchor -a "/var/lib/unbound/root.key"
 	
 # Configuration
-echo "interface: 127.0.0.1
+mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
+echo "server:
+interface: 127.0.0.1
 access-control: 127.0.0.1 allow
 port: 53
 do-daemonize: yes
+num-threads: 2
+use-caps-for-id: yes
+harden-glue: yes
 hide-identity: yes
-hide-version: yes" >> /etc/unbound/unbound.conf
+hide-version: yes" > /etc/unbound/unbound.conf
 
 # Restart unbound
 service unbound restart

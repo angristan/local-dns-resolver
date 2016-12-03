@@ -1,14 +1,22 @@
 #!/bin/bash
-if [ "$UID" -ne "0" ] #User check
-then
+
+if [ "$UID" -ne "0" ]; then
 	echo "Use this script as root."
 	exit 1
-else
-	apt-get install unbound -y 
-	service unbound stop
-	unbound -c /etc/unbound/unbound.conf
-	unbound-anchor -a "/var/lib/unbound/root.key"
-	echo "server:
+fi
+
+# Install unbound
+apt install unbound -y
+
+# Set conf location
+unbound -c /etc/unbound/unbound.conf
+
+# Set root key location
+unbound-anchor -a "/var/lib/unbound/root.key"
+	
+# Configuration
+mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
+echo "server:
 interface: 127.0.0.1
 access-control: 127.0.0.1 allow
 port: 53
@@ -18,11 +26,19 @@ use-caps-for-id: yes
 harden-glue: yes
 hide-identity: yes
 hide-version: yes
-qname-minimisation: yes" >> /etc/unbound/unbound.conf
-	service unbound start
-	chattr -i /etc/resolv.conf #Allow the modification of the file
-	sed -i 's|nameserver|#nameserver|' /etc/resolv.conf #Disable previous DNS servers
-	echo "nameserver 127.0.0.1" >> /etc/resolv.conf #Set localhost as the DNS resolver
-	chattr +i /etc/resolv.conf #Disallow the modification of the file
-	echo "The installation is done."
-fi
+qname-minimisation: yes" > /etc/unbound/unbound.conf
+
+# Restart unbound
+service unbound restart
+
+# Allow the modification of the file
+apt install e2fsprogs
+chattr -i /etc/resolv.conf
+# Disable previous DNS servers
+sed -i 's|nameserver|#nameserver|' /etc/resolv.conf
+# Set localhost as the DNS resolver
+echo "nameserver 127.0.0.1" >> /etc/resolv.conf
+# Disallow the modification to prevent the file from being overwritten by the system
+chattr +i /etc/resolv.conf
+
+echo "The installation is done."

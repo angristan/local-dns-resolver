@@ -6,7 +6,7 @@ if [ "$UID" -ne "0" ]; then
 fi
 
 # Install unbound
-dnf install unbound -y
+dnf install -y unbound
 
 # Set conf location
 unbound -c /etc/unbound/unbound.conf
@@ -30,8 +30,6 @@ hide-version: yes" > /etc/unbound/unbound.conf
 # Restart unbound
 systemctl restart unbound
 
-# Allow the modification of the file
-chattr -i /etc/resolv.conf
 # Disable previous DNS servers
 sed -i 's|nameserver|#nameserver|' /etc/resolv.conf
 # Set localhost as the DNS resolver

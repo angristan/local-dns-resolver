@@ -6,7 +6,7 @@ if [ "$UID" -ne "0" ]; then
 fi
 
 # Install unbound
-pacman -Sy unbound expat
+pacman -Syu unbound expat
 
 # Get root servers list
 wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints #Root servers list

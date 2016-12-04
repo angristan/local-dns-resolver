@@ -6,7 +6,7 @@ if [ "$UID" -ne "0" ]; then
 fi
 
 # Install PowerDNS
-pacman -Sy powerdns-recursor ldns
+pacman -Syu powerdns-recursor ldns
 
 # Enable PowerDNS at boot and restart it
 systemctl start pdns-recursor && systemctl enable pdns-recursor

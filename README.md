@@ -1,42 +1,66 @@
 # Local Linux DNS resolver auto-installer
-This script with install a local DNS server on you GNU/Linux computer, and will directly communicate with the root servers securely (using DNSSEC).
+This script with install a local DNS server on you GNU/Linux computer, and will directly communicate with the root servers. This ensure speed, neutrality and no dependance on any third-party server.
 
 
 ## Use
 
-All those scripts must be run as root.
+You must run the scripts as root.
+
+Later, if you want to edit `/etc/resolv.conf`, run this command to allow modifications :
+
+`chattr -i /etc/resolv.conf` (`+i` to disallow again)
 
 ### Arch - Unbound
 ```
-wget https://raw.githubusercontent.com/Angristan/Linux-DNS-server/master/arch-unbound.sh
+wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/arch-unbound.sh
 chmod +x arch-unbound.sh
 ./arch-unbound.sh
 ```
 
 ### Arch - PowerDNS
 ```
-wget https://raw.githubusercontent.com/Angristan/Linux-DNS-server/master/arch-powerdns.sh
+wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/arch-powerdns.sh
 chmod +x arch-powerdns.sh
 ./arch-powerdns.sh
 ```
 
 ### Arch - BIND
 ```
-wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/arch-bind.sh
+wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/arch-bind.sh
 chmod +x arch-bind.sh
 ./arch-bind.sh
 ```
 
-### Debian / Ubuntu - Unbound
+### Debian - Unbound
 ```
-wget https://raw.githubusercontent.com/Angristan/ArchLinux-DNS-server/master/debian-unbound.sh
+wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/debian-unbound.sh
 chmod +x debian-unbound.sh
 ./debian-unbound.sh
 ```
 
-Note : you must run `apt-get remove resolvconf ubuntu-minimal` before runnig this script on Ubuntu.
+### Unbuntu - Unbound
+```
+wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/ubuntu-unbound.sh
+chmod +x ubuntu-unbound.sh
+./ubuntu-unbound.sh
+```
 
+### CentOS - Unbound
+```
+wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/centos-unbound.sh
+chmod +x centos-unbound.sh
+./centos-unbound.sh
+```
+
+Note : it does not work on CentOS 6. Any PR is welcome.
+
+### Fedora - Unbound
+```
+wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/fedora-unbound.sh
+chmod +x fedora-unbound.sh
+./fedora-unbound.sh
+```
 
 ## License
 
-[The unlicense](https://github.com/Angristan/ArchLinux-DNS-server/blob/master/LICENSE)  : do whatever you want with the code.
+[The unlicense](https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/LICENSE)  : do whatever you want with the code.

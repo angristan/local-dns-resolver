@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ "$UID" -ne "0" ]; then
-   echo "Use this script as root."
-   exit 1
+	echo "Use this script as root."
+	exit 1
 fi
 
 # Install bind

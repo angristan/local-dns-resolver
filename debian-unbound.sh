@@ -6,7 +6,7 @@ if [ "$UID" -ne "0" ]; then
 fi
 
 # Install unbound
-apt install unbound -y
+apt install -y unbound
 
 # Set conf location
 unbound -c /etc/unbound/unbound.conf
@@ -32,7 +32,7 @@ qname-minimisation: yes" > /etc/unbound/unbound.conf
 service unbound restart
 
 # Allow the modification of the file
-apt install e2fsprogs
+apt install -y e2fsprogs
 chattr -i /etc/resolv.conf
 # Disable previous DNS servers
 sed -i 's|nameserver|#nameserver|' /etc/resolv.conf

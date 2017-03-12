@@ -39,7 +39,7 @@ chmod +x debian-unbound.sh
 ./debian-unbound.sh
 ```
 
-### Unbuntu - Unbound
+### Ubuntu - Unbound
 ```
 wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/ubuntu-unbound.sh
 chmod +x ubuntu-unbound.sh

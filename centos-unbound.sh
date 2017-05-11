@@ -15,12 +15,13 @@ unbound -c /etc/unbound/unbound.conf
 unbound-anchor -a "/var/lib/unbound/root.key"
 
 # Get root servers list
-wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
+wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /var/lib/unbound/root.hints
 	
 # Configuration
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
+
 echo "server:
-root-hints: "/etc/unbound/root.hints"
+root-hints: "root-hints: "/var/lib/unbound/root.hints"
 auto-trust-anchor-file: "/var/lib/unbound/root.key"
 interface: 127.0.0.1
 access-control: 127.0.0.1 allow

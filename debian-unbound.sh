@@ -25,8 +25,7 @@ num-threads: 2
 use-caps-for-id: yes
 harden-glue: yes
 hide-identity: yes
-hide-version: yes
-qname-minimisation: yes" > /etc/unbound/unbound.conf
+hide-version: yes" > /etc/unbound/unbound.conf
 
 # Restart unbound
 service unbound restart

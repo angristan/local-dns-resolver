@@ -9,7 +9,8 @@ fi
 pacman -Syu unbound expat
 
 # Get root servers list
-wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints #Root servers list
+wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
+
 chmod 666 /etc/unbound/unbound.conf
 
 # Configuration

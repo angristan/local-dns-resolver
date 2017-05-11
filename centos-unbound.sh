@@ -11,12 +11,12 @@ yum install -y unbound
 # Set conf location
 unbound -c /etc/unbound/unbound.conf
 
+# Get root servers list
+wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /var/lib/unbound/root.hints
+
 # Set root key location
 unbound-anchor -a "/var/lib/unbound/root.key"
 
-# Get root servers list
-wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /var/lib/unbound/root.hints
-	
 # Configuration
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
 

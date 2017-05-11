@@ -15,7 +15,7 @@ apt install -y unbound
 unbound -c /etc/unbound/unbound.conf
 
 # Get root servers list
-root-hints: "/etc/unbound/root.hints"wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /var/lib/unbound/root.hints
+wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /var/lib/unbound/root.hints
 
 # Set root key location (for DNSSEC)
 unbound-anchor -a "/var/lib/unbound/root.key"

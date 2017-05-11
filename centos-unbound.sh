@@ -17,6 +17,7 @@ unbound-anchor -a "/var/lib/unbound/root.key"
 # Configuration
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
 echo "server:
+auto-trust-anchor-file: "/var/lib/unbound/root.key"
 interface: 127.0.0.1
 access-control: 127.0.0.1 allow
 port: 53

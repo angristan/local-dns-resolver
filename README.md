@@ -1,5 +1,5 @@
 # Local Linux DNS resolver auto-installer
-This script with install a local DNS server on you GNU/Linux computer, and will directly communicate with the root servers. This ensure speed, neutrality and no dependance on any third-party server.
+This script with install a local DNS server with DNSSEC support on you GNU/Linux computer/server, that will directly communicate with the root servers. This ensures speed, neutrality and no dependance on any third-party server (like your ISP's).
 
 Be sure to uninstall BIND, Unbound or any other DNS services on your machine before running the script.
 

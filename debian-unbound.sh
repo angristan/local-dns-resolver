@@ -16,13 +16,13 @@ unbound-anchor -a "/var/lib/unbound/root.key"
 
 # Get root servers list
 wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /var/lib/unbound/root.hints
-	
+
 # Configuration
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
 
 echo "server:
-root-hints: "/var/lib/unbound/root.hints"
-auto-trust-anchor-file: "/var/lib/unbound/root.key"
+root-hints: \"/var/lib/unbound/root.hints\"
+auto-trust-anchor-file: \"/var/lib/unbound/root.key\"
 interface: 127.0.0.1
 access-control: 127.0.0.1 allow
 port: 53
@@ -37,13 +37,12 @@ hide-version: yes" > /etc/unbound/unbound.conf
 service unbound restart
 
 # Allow the modification of the file
-apt install -y e2fsprogs
-chattr -i /etc/resolv.conf
+chmod 664 /etc/resolv.conf
 # Disable previous DNS servers
 sed -i 's|nameserver|#nameserver|' /etc/resolv.conf
 # Set localhost as the DNS resolver
 echo "nameserver 127.0.0.1" >> /etc/resolv.conf
 # Disallow the modification to prevent the file from being overwritten by the system
-chattr +i /etc/resolv.conf
+chmod 444 /etc/resolv.conf
 
 echo "The installation is done."

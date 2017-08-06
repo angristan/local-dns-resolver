@@ -8,9 +8,9 @@ fi
 # Install unbound
 pacman -Syu unbound expat
 
-#DNSSEC Key
-unbound-anchor -a "/etc/unbound/root.key"
-chown unbound:unbound /etc/unbound/root.key
+#Permissions for the DNSSEC keys
+chown root:unbound /etc/unbound
+chmod 775 /etc/unbound
 
 # Get root servers list
 wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
@@ -19,7 +19,7 @@ wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
 echo 'server:
 root-hints: "/etc/unbound/root.hints"
-trust-anchor-file: "/etc/unbound/root.key"
+auto-trust-anchor-file: trusted-key.key
 interface: 127.0.0.1
 access-control: 127.0.0.1 allow
 port: 53

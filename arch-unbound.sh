@@ -18,7 +18,7 @@ wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
 # Configuration
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
 echo 'server:
-root-hints: "/etc/unbound/root.hints"
+root-hints: root.hints
 auto-trust-anchor-file: trusted-key.key
 interface: 127.0.0.1
 access-control: 127.0.0.1 allow

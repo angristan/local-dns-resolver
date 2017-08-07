@@ -20,7 +20,7 @@ unbound-anchor -a "/var/lib/unbound/root.key"
 # Configuration
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
 
-echo "server:
+echo 'server:
 root-hints: "root-hints: "/var/lib/unbound/root.hints"
 auto-trust-anchor-file: "/var/lib/unbound/root.key"
 interface: 127.0.0.1
@@ -31,7 +31,7 @@ num-threads: 2
 use-caps-for-id: yes
 harden-glue: yes
 hide-identity: yes
-hide-version: yes" > /etc/unbound/unbound.conf
+hide-version: yes' > /etc/unbound/unbound.conf
 
 # Restart unbound
 service unbound restart

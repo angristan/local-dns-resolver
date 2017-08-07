@@ -11,9 +11,6 @@ apt-get autoremove -y resolvconf ubuntu-minimal
 # Install unbound
 apt install -y unbound
 
-# Set conf location
-unbound -c /etc/unbound/unbound.conf
-
 # Get root servers list
 wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /var/lib/unbound/root.hints
 
@@ -23,9 +20,9 @@ unbound-anchor -a "/var/lib/unbound/root.key"
 # Configuration
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
 
-echo "server:
-root-hints: "/var/lib/unbound/root.hints"
-auto-trust-anchor-file: "/var/lib/unbound/root.key"
+echo 'server:
+root-hints: /var/lib/unbound/root.hints
+auto-trust-anchor-file: /var/lib/unbound/root.key
 interface: 127.0.0.1
 access-control: 127.0.0.1 allow
 port: 53
@@ -35,7 +32,7 @@ use-caps-for-id: yes
 harden-glue: yes
 hide-identity: yes
 hide-version: yes
-qname-minimisation: yes" > /etc/unbound/unbound.conf
+qname-minimisation: yes' > /etc/unbound/unbound.conf
 
 # Restart unbound
 service unbound restart

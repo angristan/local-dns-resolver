@@ -53,7 +53,7 @@ chmod +x centos-unbound.sh
 ./centos-unbound.sh
 ```
 
-Note : it does not work on CentOS 6. Any PR is welcome.
+Note : it does not work on CentOS 6. Any PR is welcomed.
 
 ### Fedora - Unbound
 ```

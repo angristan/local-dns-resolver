@@ -9,17 +9,18 @@ fi
 dnf install -y unbound
 
 # Get root servers list
-wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /var/lib/unbound/root.hints
+wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
 
 # Set root key location (for DNSSEC)
-unbound-anchor -a "/var/lib/unbound/root.key"
-	
+rm /etc/unbound/root.key
+unbound-anchor -a "/etc/unbound/root.key"
+
 # Configuration
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
 
 echo 'server:
-root-hints: /var/lib/unbound/root.hints
-auto-trust-anchor-file: /var/lib/unbound/root.key
+root-hints: root.hints
+trust-anchor-file: root.key
 interface: 127.0.0.1
 access-control: 127.0.0.1 allow
 port: 53
@@ -28,7 +29,8 @@ num-threads: 2
 use-caps-for-id: yes
 harden-glue: yes
 hide-identity: yes
-hide-version: yes' > /etc/unbound/unbound.conf
+hide-version: yes
+qname-minimisation: yes' > /etc/unbound/unbound.conf
 
 # Restart unbound
 systemctl restart unbound

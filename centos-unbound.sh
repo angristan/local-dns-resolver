@@ -8,28 +8,9 @@ fi
 # Install unbound
 yum install -y unbound
 
-# Get root servers list
-wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
-
-# Set root key location
-rm /etc/unbound/root.key
-unbound-anchor -a "/etc/unbound/root.key"
-
-# Configuration
-mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
-
-echo 'server:
-root-hints: root.hints
-auto-trust-anchor-file: root.key
-interface: 127.0.0.1
-access-control: 127.0.0.1 allow
-port: 53
-do-daemonize: yes
-num-threads: 2
-use-caps-for-id: yes
-harden-glue: yes
-hide-identity: yes
-hide-version: yes' > /etc/unbound/unbound.conf
+sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
+sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
+sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
 
 # Restart unbound
 service unbound restart

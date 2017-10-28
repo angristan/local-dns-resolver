@@ -12,6 +12,7 @@ apt-get autoremove -y resolvconf
 apt-get update
 apt-get install -y unbound
 
+# Configuration
 echo 'hide-identity: yes
 hide-version: yes
 use-caps-for-id: yes' >> /etc/unbound/unbound.conf

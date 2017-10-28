@@ -13,7 +13,8 @@ apt-get update
 apt-get install -y unbound
 
 echo 'hide-identity: yes
-hide-version: yes' >> /etc/unbound/unbound.conf
+hide-version: yes
+use-caps-for-id: yes' >> /etc/unbound/unbound.conf
 
 # Restart unbound
 service unbound restart

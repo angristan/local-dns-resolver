@@ -32,30 +32,28 @@ chmod +x arch-bind.sh
 ./arch-bind.sh
 ```
 
-### Debian - Unbound
+### Debian (7,8,9) - Unbound
 ```
 wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/debian-unbound.sh
 chmod +x debian-unbound.sh
 ./debian-unbound.sh
 ```
 
-### Ubuntu - Unbound
+### Ubuntu (14 to 17) - Unbound
 ```
 wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/ubuntu-unbound.sh
 chmod +x ubuntu-unbound.sh
 ./ubuntu-unbound.sh
 ```
 
-### CentOS - Unbound
+### CentOS 7 - Unbound
 ```
 wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/centos-unbound.sh
 chmod +x centos-unbound.sh
 ./centos-unbound.sh
 ```
 
-Note : it does not work on CentOS 6. Any PR is welcomed.
-
-### Fedora - Unbound
+### Fedora (25 and 26, at least) - Unbound
 ```
 wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/fedora-unbound.sh
 chmod +x fedora-unbound.sh

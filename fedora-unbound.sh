@@ -8,7 +8,7 @@ fi
 # Install unbound
 dnf install -y unbound
 
-#Configuration
+# Configuration
 sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
 sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
 sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf

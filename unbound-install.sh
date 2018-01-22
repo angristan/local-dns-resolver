@@ -6,27 +6,14 @@ if [[ "$UID" -ne 0 ]]; then
 fi
 
 if [[ -e /etc/debian_version ]]; then
-	VERSION_ID=$(cat /etc/os-release | grep "VERSION_ID")
-	if [[ "$VERSION_ID" = 'VERSION_ID="7"' ]] || [[ "$VERSION_ID" = 'VERSION_ID="8"' ]] || [[ "$VERSION_ID" = 'VERSION_ID="9"' ]]; then
-		OS="debian"
-		elif [[ "$VERSION_ID" = 'VERSION_ID="12.04"' ]] || [[ "$VERSION_ID" = 'VERSION_ID="14.04"' ]] || [[ "$VERSION_ID" = 'VERSION_ID="16.04"' ]] || [[ "$VERSION_ID" = 'VERSION_ID="16.10"' ]] || [[ "$VERSION_ID" = 'VERSION_ID="17.04"' ]]; then
-			OS="ubuntu"
-			else
-				echo "$VERSION_ID not supported"
-				while [[ $CONTINUE != "y" && $CONTINUE != "n" ]]; do
-					read -p "Continue anyway? [y/n]: " -e CONTINUE
-				done
-		if [[ "$CONTINUE" = "n" ]]; then
-			echo "Ok, bye !"
-			exit 4
-		fi
-	fi	
+	# For Debian and Ubuntu
+	OS=$(cat /etc/os-release | grep -e ID= | grep -v VERSION_ID | cut -c 4-)
 elif [[ -e /etc/centos-release || -e /etc/redhat-release || -e /etc/system-release && ! -e /etc/fedora-release ]]; then
 	OS="centos"
-elif [[ -e /etc/arch-release ]]; then
-	OS="arch"
 elif [[ -e /etc/fedora-release ]]; then
 	OS="fedora"
+elif [[ -e /etc/arch-release ]]; then
+	OS="arch"
 else
 	echo "Looks like you aren't running this installer on a Debian, Ubuntu, CentOS, Fedora or ArchLinux system"
 	exit 4
@@ -34,8 +21,8 @@ fi
 
 if [[ "$OS" = "debian" ]] || [[ "$OS" = "ubuntu" ]]; then
 	if [[ "$OS" = "ubuntu" ]]; then
-		# Remove this packages to avoid conflicts
-		apt-get autoremove -y ubuntu-minimal
+	# Remove this packages to avoid conflicts
+	apt-get autoremove -y ubuntu-minimal
 	fi
 	# Remove this packages to avoid conflicts
 	apt-get autoremove -y resolvconf

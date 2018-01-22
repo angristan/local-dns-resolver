@@ -53,10 +53,12 @@ chmod 775 /etc/unbound
 wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
 
 # Get trust anchor
-unbound-anchor -a /etc/unbound/root.key
+unbound-anchor -v -a /etc/unbound/root.key
+
+# Backup current config
+mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old 2>/dev/null
 
 # Configuration
-mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
 echo '### Validating, recursive and caching DNS Server ###
 ### Based on http://calomel.org/unbound_dns.html ###
 
@@ -126,7 +128,7 @@ hide-version: yes
 harden-glue: yes
 
 # Require DNSSEC data for trust-anchored zones, if such data is absent, the
-# zone becomes  bogus. Harden against receiving dnssec-stripped data. If you
+# zone becomes bogus. Harden against receiving dnssec-stripped data. If you
 # turn it off, failing to validate dnskey data for a trustanchor will trigger
 # insecure mode for that zone (like without a trustanchor). Default on,
 # which insists on dnssec data for trust-anchored zones.

@@ -6,8 +6,7 @@ if [[ "$UID" -ne 0 ]]; then
 fi
 
 if [[ -e /etc/debian_version ]]; then
-	# For Debian and Ubuntu
-	OS=$(cat /etc/os-release | grep -e ID= | grep -v VERSION_ID | cut -c 4-)
+	OS="debian"
 elif [[ -e /etc/centos-release || -e /etc/redhat-release || -e /etc/system-release && ! -e /etc/fedora-release ]]; then
 	OS="centos"
 elif [[ -e /etc/fedora-release ]]; then
@@ -19,11 +18,7 @@ else
 	exit 4
 fi
 
-if [[ "$OS" = "debian" ]] || [[ "$OS" = "ubuntu" ]]; then
-	if [[ "$OS" = "ubuntu" ]]; then
-	# Remove this packages to avoid conflicts
-	apt-get autoremove -y ubuntu-minimal
-	fi
+if [[ "$OS" = "debian" ]]; then
 	# Remove this packages to avoid conflicts
 	apt-get autoremove -y resolvconf
 	

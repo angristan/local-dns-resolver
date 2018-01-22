@@ -45,12 +45,15 @@ if [[ "$OS" = "arch" ]]; then
 	pacman -Syu unbound expat
 fi
 
-#Permissions for the DNSSEC keys
+# Permissions for the DNSSEC keys
 chown root:unbound /etc/unbound
 chmod 775 /etc/unbound
 
 # Get root servers list
 wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
+
+# Get trust anchor
+unbound-anchor -a /etc/unbound/root.key
 
 # Configuration
 mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
@@ -155,7 +158,7 @@ cache-max-ttl: 86400
 prefetch: yes
 
 # Number of threads to create. 1 disables threading. This should equal the number
-# of CPU cores in the machine.
+# of CPU cores in the machine.https://raw.githubusercontent.com/cezar97/Local-DNS-resolver/master/unbound-install.sh
 num-threads: 1
 
 # Increase the memory size of the cache. Use roughly twice as much rrset cache

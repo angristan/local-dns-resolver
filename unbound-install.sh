@@ -62,7 +62,7 @@ echo '### Validating, recursive and caching DNS Server ###
 
 server:
 
-# Specify the interfaces to answer queries from by ip-address.  The default
+# Specify the interfaces to answer queries from by ip-address. The default
 # is to listen to localhost (127.0.0.1 and ::1). Specify 0.0.0.0 and ::0 to
 # bind to all available interfaces. Specify every interface[@port] on a new
 # "interface:" labeled line. The listen interfaces are not changed on
@@ -99,9 +99,9 @@ do-daemonize: yes
 # and nonrecursive ok).
 access-control: 127.0.0.1 allow
 
-# Read  the  root  hints from this file. Default is nothing, using built in
-# hints for the IN class. The file has the format of  zone files,  with  root
-# nameserver  names  and  addresses  only. The default may become outdated,
+# Read the root hints from this file. Default is nothing, using built in
+# hints for the IN class. The file has the format of zone files, with root
+# nameserver names and addresses only. The default may become outdated,
 # when servers change, therefore it is good practice to use a root-hints
 # file. Get one from ftp://FTP.INTERNIC.NET/domain/named.cache
 root-hints: "/etc/unbound/root.hints"
@@ -111,7 +111,6 @@ root-hints: "/etc/unbound/root.hints"
 # per domain name, to track multiple zones. If you use forward-zone below to
 # query the Google DNS servers you MUST comment out this option or all DNS
 # queries will fail.
-# auto-trust-anchor-file: "/etc/unbound/root.key"
 auto-trust-anchor-file: "/etc/unbound/root.key"
 
 # If enabled id.server and hostname.bind queries are refused.
@@ -127,7 +126,7 @@ hide-version: yes
 harden-glue: yes
 
 # Require DNSSEC data for trust-anchored zones, if such data is absent, the
-# zone becomes  bogus.  Harden against receiving dnssec-stripped data. If you
+# zone becomes  bogus. Harden against receiving dnssec-stripped data. If you
 # turn it off, failing to validate dnskey data for a trustanchor will trigger
 # insecure mode for that zone (like without a trustanchor). Default on,
 # which insists on dnssec data for trust-anchored zones.
@@ -149,6 +148,10 @@ cache-min-ttl: 3600
 # cache. Items are not cached for longer. In seconds.
 cache-max-ttl: 86400
 
+# Significantly improve UDP performance (on kernels that support it,
+# otherwise it is inactive, the "unbound-control status" command shows if it is active). 
+so-reuseport: yes
+
 # Perform prefetching of close to expired message cache entries. If a client
 # requests the dns lookup and the TTL of the cached hostname is going to
 # expire in less than 10% of its TTL, unbound will (1st) return the ip of the
@@ -158,19 +161,30 @@ cache-max-ttl: 86400
 prefetch: yes
 
 # Number of threads to create. 1 disables threading. This should equal the number
-# of CPU cores in the machine.https://raw.githubusercontent.com/cezar97/Local-DNS-resolver/master/unbound-install.sh
+# of CPU cores in the machine.
 num-threads: 1
+
+# Set *-slabs to a power of 2 close to the num-threads value. Do this for msg-cache-slabs,
+# rrset-cache-slabs, infra-cache-slabs and key-cache-slabs. This reduces lock contention. 
+msg-cache-slabs: 2
+rrset-cache-slabs: 2
+infra-cache-slabs: 2
+key-cache-slabs: 2
 
 # Increase the memory size of the cache. Use roughly twice as much rrset cache
 # memory as you use msg cache memory. Due to malloc overhead, the total memory
-# usage is likely to rise to double (or 2.5x) the total cache memory. The test
-# box has 4gig of ram so 256meg for rrset allows a lot of room for cacheed objects.
-rrset-cache-size: 128m
-msg-cache-size: 64m
+# usage is likely to rise to double (or 2.5x) the total cache memory.
+rrset-cache-size: 100m
+msg-cache-size: 50m
 
-# Buffer size for UDP port 53 incoming (SO_RCVBUF socket option). This sets
+# More outgoing connections.
+# Depends on number of cores: 1024/cores - 50.
+outgoing-range: 950
+
+# Buffer size for UDP port 53 incoming. This sets
 # the kernel buffer larger so that no messages are lost in spikes in the traffic.
 so-rcvbuf: 1m
+so-sndbuf: 1m
 
 # Enforce privacy of these addresses. Strips them away from answers. It may
 # cause DNSSEC validation to additionally mark it as bogus. Protects against

@@ -209,6 +209,7 @@ chattr -i /etc/resolv.conf
 
 # Disable previous DNS servers
 sed -i "s|nameserver|#nameserver|" /etc/resolv.conf
+sed -i "s|search|#search|" /etc/resolv.conf
 
 # Set localhost as the DNS resolver
 echo "nameserver 127.0.0.1" >> /etc/resolv.conf

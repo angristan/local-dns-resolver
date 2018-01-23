@@ -37,7 +37,8 @@ if [[ "$OS" = "debian" ]]; then
 	# Configuration
 	echo 'hide-identity: yes
 	hide-version: yes
-	use-caps-for-id: yes' >> /etc/unbound/unbound.conf
+	use-caps-for-id: yes
+	prefetch: yes' >> /etc/unbound/unbound.conf
 
 	# Restart Unbound
 	service unbound restart
@@ -101,7 +102,8 @@ if [[ "$OS" = "arch" ]]; then
 	harden-glue: yes
 	hide-identity: yes
 	hide-version: yes
-	qname-minimisation: yes' > /etc/unbound/unbound.conf
+	qname-minimisation: yes
+	prefetch: yes' > /etc/unbound/unbound.conf
 
 	# Enable service at boot
 	systemctl enable unbound

@@ -1,65 +1,48 @@
-# Local Linux DNS resolver auto-installer
-This script with install a local DNS server with DNSSEC support on you GNU/Linux computer/server, that will directly communicate with the root servers. This ensures speed, neutrality and no dependance on any third-party server (like your ISP's).
+# Local DNS resolver installer for Linux
 
-Be sure to uninstall BIND, Unbound or any other DNS services on your machine before running the script.
+This script will install a local **Unbound** DNS resolver with **DNSSEC** support on your GNU/Linux computer/server, that will directly communicate with the root servers. This ensures speed, neutrality and no dependance on any third-party server (like your ISP's).
 
-## Use
+The resolver is "local" because Unbound will only listen on localhost and accept requests from localhost.
 
-You must run the scripts as root.
+## Support
+
+The script is designed to work on the following OS:
+
+* Debian 7+
+* Ubuntu 14+
+* CentOS 7
+* Fedora 25+
+* Arch Linux
+
+Be sure to uninstall BIND or any other DNS services on your machine before running the script, otherwise Ubound won't be able to start.
+
+## Usage
+
+First, download the script and make it executable:
+
+```
+wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/unbound-install.sh
+chmod +x unbound-install.sh
+```
+
+Then run it as root:
+```
+sudo ./unbound-install.sh
+```
+
+Enjoy!
+
+## Change DNS resolver
 
 Later, if you want to edit `/etc/resolv.conf`, run this command to allow modifications :
 
 `chattr -i /etc/resolv.conf` (`+i` to disallow again)
 
-### Arch - Unbound
-```
-wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/arch-unbound.sh
-chmod +x arch-unbound.sh
-./arch-unbound.sh
-```
+## Check DNSSEC
 
-### Arch - PowerDNS
-```
-wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/arch-powerdns.sh
-chmod +x arch-powerdns.sh
-./arch-powerdns.sh
-```
+DNSSEC should be enabled. To check if Unbound verifies DNSSEC signatures, run:
 
-### Arch - BIND
 ```
-wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/arch-bind.sh
-chmod +x arch-bind.sh
-./arch-bind.sh
+dig www.dnssec-failed.org
 ```
-
-### Debian (7,8,9) - Unbound
-```
-wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/debian-unbound.sh
-chmod +x debian-unbound.sh
-./debian-unbound.sh
-```
-
-### Ubuntu (14 to 17) - Unbound
-```
-wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/ubuntu-unbound.sh
-chmod +x ubuntu-unbound.sh
-./ubuntu-unbound.sh
-```
-
-### CentOS 7 - Unbound
-```
-wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/centos-unbound.sh
-chmod +x centos-unbound.sh
-./centos-unbound.sh
-```
-
-### Fedora (25 and 26, at least) - Unbound
-```
-wget https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/fedora-unbound.sh
-chmod +x fedora-unbound.sh
-./fedora-unbound.sh
-```
-
-## License
-
-[The unlicense](https://raw.githubusercontent.com/Angristan/Local-DNS-resolver/master/LICENSE)  : do whatever you want with the code.
+Which should return `status: SERVFAIL` as the signature for this domain is broken.

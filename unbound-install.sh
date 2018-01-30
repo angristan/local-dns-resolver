@@ -8,7 +8,7 @@ fi
 if [[ $(netstat -ulpn | grep :53) != "" ]]; then
 		echo "Looks like another software is listnening on UDP port 53:"
 		netstat -ulnp | grep :53
-		echo "Please uninstall it before installing unbound."
+		echo "Please disable or uninstall it before installing unbound."
 	exit 1
 fi
 

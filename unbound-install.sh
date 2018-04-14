@@ -96,7 +96,7 @@ if [[ "$OS" = "arch" ]]; then
 	chmod 775 /etc/unbound
 
 	# Get root servers list
-	wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
+	wget https://www.internic.net/domain/named.root -O /etc/unbound/root.hints
 
 	# Configuration
 	mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old

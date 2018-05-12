@@ -36,10 +36,6 @@ read -n1 -r -p "Press any key to continue..."
 echo ""
 
 if [[ "$OS" = "debian" ]]; then
-	# Remove this package to avoid conflicts
-	# This will also remove ubuntu-minimal on Ubuntu
-	apt-get autoremove -y resolvconf
-
 	# Install Unbound
 	apt-get update
 	apt-get install -y unbound

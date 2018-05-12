@@ -46,9 +46,9 @@ if [[ "$OS" = "debian" ]]; then
 
 	# Configuration
 	echo 'hide-identity: yes
-	hide-version: yes
-	use-caps-for-id: yes
-	prefetch: yes' >> /etc/unbound/unbound.conf
+hide-version: yes
+use-caps-for-id: yes
+prefetch: yes' >> /etc/unbound/unbound.conf
 
 	# Restart Unbound
 	service unbound restart

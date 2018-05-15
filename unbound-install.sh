@@ -6,9 +6,10 @@ if [[ "$UID" -ne 0 ]]; then
 fi
 
 # Check if port 53 is in use
-IPS=$(lsof -i :53 | awk -F " " {'print $9'} | cut -d ":" -f1 | tail -n +2)
+IPS=$(lsof -i :53 | awk -F " " {'print $9'} | tail -n +2)
 for IP in $IPS
 do
+IP=$(echo $IP | cut -d':' -f1)
 if [[ $IP = "localhost" ]] || [[ $IP = "*" ]]; then
     echo "It looks like another software is listnening on port 53:"
     echo ""

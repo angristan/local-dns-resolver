@@ -70,6 +70,7 @@ EOF
 	systemctl enable unbound
 	# Start the service
 	systemctl start unbound
+  ;;
   fedora)
 	# Install Unbound
 	dnf install -y unbound

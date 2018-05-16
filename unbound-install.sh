@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -u
+
 if [[ "$UID" -ne 0 ]]; then
 	echo "Sorry, you need to run this as root"
 	exit 1
@@ -35,25 +37,27 @@ echo ""
 read -n1 -r -p "Press any key to continue..."
 echo ""
 
-if [[ "$OS" = "debian" ]]; then
+case "$OS" in
+  debian)
 	# Install Unbound
 	apt-get update
 	apt-get install -y unbound
 
 	# Configuration
-	echo 'hide-identity: yes
+        cat <<EOF >> /etc/unbound/unbound.conf
+hide-identity: yes
 hide-version: yes
 use-caps-for-id: yes
-prefetch: yes' >> /etc/unbound/unbound.conf
+prefetch: yes
+EOF
 
 	# Restart Unbound
 	service unbound restart
 
 	# Needed for the chattr command
-	apt-get install -y e2fsprogs
-fi
-
-if [[ "$OS" = "centos" ]]; then
+	apt-get install -y e2fsprogs # FBR: is it really better than chmod?
+  ;;
+  centos)
 	# Install Unbound
 	yum install -y unbound
 
@@ -66,9 +70,7 @@ if [[ "$OS" = "centos" ]]; then
 	systemctl enable unbound
 	# Start the service
 	systemctl start unbound
-fi
-
-if [[ "$OS" = "fedora" ]]; then
+  fedora)
 	# Install Unbound
 	dnf install -y unbound
 
@@ -81,9 +83,8 @@ if [[ "$OS" = "fedora" ]]; then
 	systemctl enable unbound
 	# Start the service
 	systemctl start unbound
-fi
-
-if [[ "$OS" = "arch" ]]; then
+  ;;
+  arch)
 	# Install Unbound
 	pacman -Syu unbound expat
 
@@ -96,28 +97,35 @@ if [[ "$OS" = "arch" ]]; then
 
 	# Configuration
 	mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
-	echo 'server:
-	root-hints: root.hints
-	auto-trust-anchor-file: trusted-key.key
-	interface: 127.0.0.1
-	access-control: 127.0.0.1 allow
-	port: 53
-	do-daemonize: yes
-	num-threads: 2
-	use-caps-for-id: yes
-	harden-glue: yes
-	hide-identity: yes
-	hide-version: yes
-	qname-minimisation: yes
-	prefetch: yes' > /etc/unbound/unbound.conf
+        cat <<EOF > /etc/unbound/unbound.conf
+server:
+root-hints: root.hints
+auto-trust-anchor-file: trusted-key.key
+interface: 127.0.0.1
+access-control: 127.0.0.1 allow
+port: 53
+do-daemonize: yes
+num-threads: 2
+use-caps-for-id: yes
+harden-glue: yes
+hide-identity: yes
+hide-version: yes
+qname-minimisation: yes
+prefetch: yes
+EOF
 
 	# Enable service at boot
 	systemctl enable unbound
 	# Start the service
 	systemctl start unbound
-fi
+  ;;
+  *) echo "OS not in {debian, centos, fedora, arch}"
+     exit 4
+     ;;
+esac
 
 # Allow the modification of the file
+# FBR: why not chmod 644 /etc/resolv.conf? Then you would not depend on e2fsprogs.
 chattr -i /etc/resolv.conf
 
 # Disable previous DNS servers
@@ -129,6 +137,8 @@ echo "nameserver 127.0.0.1" >> /etc/resolv.conf
 
 # Disallow the modification to prevent the file from being overwritten by the system.
 # Use -i to enable modifications
+
+# FBR: why not chmod 444 /etc/resolv.conf?
 chattr +i /etc/resolv.conf
 
-echo "The installation is done."
+echo "Installation and configuration: OK."

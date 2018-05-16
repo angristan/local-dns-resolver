@@ -46,3 +46,12 @@ DNSSEC should be enabled. To check if Unbound verifies DNSSEC signatures, run:
 dig www.dnssec-failed.org
 ```
 Which should return `status: SERVFAIL` as the signature for this domain is broken.
+
+## Check you are the only DNS involved
+
+```
+firefox https://dnsleaktest.com/
+```
+Only your IP should show up.
+
+

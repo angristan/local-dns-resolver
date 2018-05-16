@@ -52,6 +52,4 @@ Which should return `status: SERVFAIL` as the signature for this domain is broke
 ```
 firefox https://dnsleaktest.com/
 ```
-Only your IP should show up.
-
-
+Only your IP should show up, or the one from your VPN provider's exit node.

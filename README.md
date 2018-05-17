@@ -47,9 +47,6 @@ dig www.dnssec-failed.org
 ```
 Which should return `status: SERVFAIL` as the signature for this domain is broken.
 
-## Check you are the only DNS involved
+## Check for DNS leaks
 
-```
-firefox https://dnsleaktest.com/
-```
-Only your IP should show up, or the one from your VPN provider's exit node.
+Go to [dnsleaktest.com](https://dnsleaktest.com/) or [ipleak.net](https://ipleak.net/) with your browser. Only your IP should show up, or the one from your VPN provider.

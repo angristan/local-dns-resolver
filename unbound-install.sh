@@ -5,11 +5,11 @@ if [[ "$UID" -ne 0 ]]; then
 	exit 1
 fi
 
-lsof -i udp@127.0.0.1:53 > /dev/null 2>&1
+lsof -i :53 > /dev/null 2>&1
 if [ $? -eq 0 ]; then
-    echo "It looks like another software is listnening on UDP port 53:"
+    echo "It looks like another software is listnening on port 53:"
     echo ""
-    lsof -i udp@127.0.0.1:53
+    lsof -i :53
     echo ""
     echo "Please disable or uninstall it before installing unbound."
     exit 1

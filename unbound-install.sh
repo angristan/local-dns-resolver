@@ -5,15 +5,20 @@ if [[ "$UID" -ne 0 ]]; then
   exit 1
 fi
 
-lsof -i :53 > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-  echo "It looks like another software is listnening on port 53:"
-  echo ""
-  lsof -i :53
-  echo ""
-  echo "Please disable or uninstall it before installing unbound."
-  exit 1
+# Check if port 53 is in use
+IPS=$(lsof -i :53 | awk -F " " '{print $9}' | tail -n +2)
+for IP in $IPS
+do
+IP=$(echo "$IP" | cut -d':' -f1)
+if [[ $IP =~ "local" ]] || [[ $IP =~ "loop" ]] || [[ $IP = "*" ]]; then
+    echo "It looks like another software is listnening on port 53:"
+    echo ""
+    lsof -i :53
+    echo ""
+    echo "Please disable or uninstall it before installing unbound."
+    exit 1
 fi
+done
 
 if [[ -e /etc/debian_version ]]; then
   # Detects all variants of Debian, including Ubuntu

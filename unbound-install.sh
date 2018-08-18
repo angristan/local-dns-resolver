@@ -1,32 +1,32 @@
 #!/bin/bash
 
 if [[ "$UID" -ne 0 ]]; then
-	echo "Sorry, you need to run this as root"
-	exit 1
+  echo "Sorry, you need to run this as root"
+  exit 1
 fi
 
 lsof -i :53 > /dev/null 2>&1
 if [ $? -eq 0 ]; then
-    echo "It looks like another software is listnening on port 53:"
-    echo ""
-    lsof -i :53
-    echo ""
-    echo "Please disable or uninstall it before installing unbound."
-    exit 1
+  echo "It looks like another software is listnening on port 53:"
+  echo ""
+  lsof -i :53
+  echo ""
+  echo "Please disable or uninstall it before installing unbound."
+  exit 1
 fi
 
 if [[ -e /etc/debian_version ]]; then
-	# Detects all variants of Debian, including Ubuntu
-	OS="debian"
+  # Detects all variants of Debian, including Ubuntu
+  OS="debian"
 elif [[ -e /etc/centos-release || -e /etc/redhat-release || -e /etc/system-release && ! -e /etc/fedora-release ]]; then
-	OS="centos"
+  OS="centos"
 elif [[ -e /etc/fedora-release ]]; then
-	OS="fedora"
+  OS="fedora"
 elif [[ -e /etc/arch-release ]]; then
-	OS="arch"
+  OS="arch"
 else
-	echo "Looks like you aren't running this installer on a Debian, Ubuntu, CentOS, Fedora or Arch Linux system"
-	exit 4
+  echo "Looks like you aren't running this installer on a Debian, Ubuntu, CentOS, Fedora or Arch Linux system"
+  exit 4
 fi
 
 echo ""
@@ -36,85 +36,85 @@ read -n1 -r -p "Press any key to continue..."
 echo ""
 
 if [[ "$OS" = "debian" ]]; then
-	# Install Unbound
-	apt-get update
-	apt-get install -y unbound
+  # Install Unbound
+  apt-get update
+  apt-get install -y unbound
 
-	# Configuration
-	echo 'hide-identity: yes
+  # Configuration
+  echo 'hide-identity: yes
 hide-version: yes
 use-caps-for-id: yes
 prefetch: yes' >> /etc/unbound/unbound.conf
 
-	# Restart Unbound
-	service unbound restart
+  # Restart Unbound
+  service unbound restart
 
-	# Needed for the chattr command
-	apt-get install -y e2fsprogs
+  # Needed for the chattr command
+  apt-get install -y e2fsprogs
 fi
 
 if [[ "$OS" = "centos" ]]; then
-	# Install Unbound
-	yum install -y unbound
+  # Install Unbound
+  yum install -y unbound
 
-	# Configuration
-	sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
-	sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
-	sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
+  # Configuration
+  sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
+  sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
+  sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
 
-	# Enable service at boot
-	systemctl enable unbound
-	# Start the service
-	systemctl start unbound
+  # Enable service at boot
+  systemctl enable unbound
+  # Start the service
+  systemctl start unbound
 fi
 
 if [[ "$OS" = "fedora" ]]; then
-	# Install Unbound
-	dnf install -y unbound
+  # Install Unbound
+  dnf install -y unbound
 
-	# Configuration
-	sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
-	sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
-	sed -i 's|# use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
+  # Configuration
+  sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
+  sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
+  sed -i 's|# use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
 
-	# Enable service at boot
-	systemctl enable unbound
-	# Start the service
-	systemctl start unbound
+  # Enable service at boot
+  systemctl enable unbound
+  # Start the service
+  systemctl start unbound
 fi
 
 if [[ "$OS" = "arch" ]]; then
-	# Install Unbound
-	pacman -Syu unbound expat
+  # Install Unbound
+  pacman -Syu unbound expat
 
-	#Permissions for the DNSSEC keys
-	chown root:unbound /etc/unbound
-	chmod 775 /etc/unbound
+  #Permissions for the DNSSEC keys
+  chown root:unbound /etc/unbound
+  chmod 775 /etc/unbound
 
-	# Get root servers list
-	wget https://www.internic.net/domain/named.root -O /etc/unbound/root.hints
+  # Get root servers list
+  wget https://www.internic.net/domain/named.root -O /etc/unbound/root.hints
 
-	# Configuration
-	mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
-	echo 'server:
-	root-hints: root.hints
-	auto-trust-anchor-file: trusted-key.key
-	interface: 127.0.0.1
-	access-control: 127.0.0.1 allow
-	port: 53
-	do-daemonize: yes
-	num-threads: 2
-	use-caps-for-id: yes
-	harden-glue: yes
-	hide-identity: yes
-	hide-version: yes
-	qname-minimisation: yes
-	prefetch: yes' > /etc/unbound/unbound.conf
+  # Configuration
+  mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
+  echo 'server:
+root-hints: root.hints
+auto-trust-anchor-file: trusted-key.key
+interface: 127.0.0.1
+access-control: 127.0.0.1 allow
+port: 53
+do-daemonize: yes
+num-threads: 2
+use-caps-for-id: yes
+harden-glue: yes
+hide-identity: yes
+hide-version: yes
+qname-minimisation: yes
+prefetch: yes' > /etc/unbound/unbound.conf
 
-	# Enable service at boot
-	systemctl enable unbound
-	# Start the service
-	systemctl start unbound
+  # Enable service at boot
+  systemctl enable unbound
+  # Start the service
+  systemctl start unbound
 fi
 
 # DNS Rebinding fix

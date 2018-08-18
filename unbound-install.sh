@@ -119,7 +119,7 @@ fi
 
 # DNS Rebinding fix
 PRIVATE_ADDRESSES="10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 169.254.0.0/16 fd00::/8 fe80::/10 127.0.0.0/8 ::ffff:0:0/96"
-echo 'private-address: $PRIVATE_ADDRESSES' >> /etc/unbound/unbound.conf
+echo "private-address: $PRIVATE_ADDRESSES" >> /etc/unbound/unbound.conf
 
 # Allow the modification of the file
 chattr -i /etc/resolv.conf

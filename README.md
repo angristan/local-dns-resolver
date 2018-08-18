@@ -43,6 +43,10 @@ Later, if you want to edit `/etc/resolv.conf`, run this command to allow modific
 DNSSEC should be enabled. To check if Unbound verifies DNSSEC signatures, run:
 
 ```
-dig www.dnssec-failed.org
+dig www.dnssec-failed.org | grep status
 ```
 Which should return `status: SERVFAIL` as the signature for this domain is broken.
+
+## Check for DNS leaks
+
+Go to [dnsleaktest.com](https://dnsleaktest.com/) or [ipleak.net](https://ipleak.net/) with your browser. Only your IP should show up, or the one from your VPN provider.

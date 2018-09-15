@@ -61,7 +61,7 @@ if [[ "$OS" = "centos" ]]; then
   yum install -y unbound
 
   # Configuration
-  echo 'interface: 127.0.0.1' >> /etc/unbound/unbound.conf
+  sed -i 's|# interface: 0.0.0.0$|interface: 127.0.0.1|' /etc/unbound/unbound.conf
   sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
   sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
   sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
@@ -72,7 +72,7 @@ if [[ "$OS" = "fedora" ]]; then
   dnf install -y unbound
 
   # Configuration
-  echo 'interface: 127.0.0.1' >> /etc/unbound/unbound.conf
+  sed -i 's|# interface: 0.0.0.0$|interface: 127.0.0.1|' /etc/unbound/unbound.conf
   sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
   sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
   sed -i 's|# use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
@@ -107,15 +107,18 @@ qname-minimisation: yes
 prefetch: yes' > /etc/unbound/unbound.conf
 fi
 
-# DNS Rebinding fix
-echo "private-address: 10.0.0.0/8
-private-address: 172.16.0.0/12
-private-address: 192.168.0.0/16
-private-address: 169.254.0.0/16
-private-address: fd00::/8
-private-address: fe80::/10
-private-address: 127.0.0.0/8
-private-address: ::ffff:0:0/96" >> /etc/unbound/unbound.conf
+if [[ ! "$OS" =~ (fedora|centos) ]];then
+  # DNS Rebinding fix
+  echo "private-address: 10.0.0.0/8
+  private-address: 172.16.0.0/12
+  private-address: 192.168.0.0/16
+  private-address: 169.254.0.0/16
+  private-address: fd00::/8
+  private-address: fe80::/10
+  private-address: 127.0.0.0/8
+  private-address: ::ffff:0:0/96" >> /etc/unbound/unbound.conf
+fi
+
 
 # Enable service at boot
 systemctl enable unbound

@@ -46,7 +46,8 @@ if [[ "$OS" = "debian" ]]; then
   apt-get install -y unbound
 
   # Configuration
-  echo 'hide-identity: yes
+  echo 'interface: 127.0.0.1
+hide-identity: yes
 hide-version: yes
 use-caps-for-id: yes
 prefetch: yes' >> /etc/unbound/unbound.conf
@@ -60,6 +61,7 @@ if [[ "$OS" = "centos" ]]; then
   yum install -y unbound
 
   # Configuration
+  echo 'interface: 127.0.0.1' >> /etc/unbound/unbound.conf
   sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
   sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
   sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
@@ -70,6 +72,7 @@ if [[ "$OS" = "fedora" ]]; then
   dnf install -y unbound
 
   # Configuration
+  echo 'interface: 127.0.0.1' >> /etc/unbound/unbound.conf
   sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
   sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
   sed -i 's|# use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf

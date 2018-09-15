@@ -13,7 +13,7 @@ if [ $? -eq 0 ]; then
   echo ""
   echo "Please disable or uninstall it before installing unbound."
   while [[ $CONTINUE != "y" && $CONTINUE != "n" ]]; do
-    read -rp "Do you still want to run the script? Unbound might not work... [y/n]: " -e local CONTINUE
+    read -rp "Do you still want to run the script? Unbound might not work... [y/n]: " -e CONTINUE
   done
   if [[ "$CONTINUE" = "n" ]]; then
     exit 2

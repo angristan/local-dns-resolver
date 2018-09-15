@@ -8,7 +8,7 @@ The resolver is "local" because Unbound will only listen on localhost and accept
 
 The script is designed to work on the following OS:
 
-* Debian 7+
+* Debian 8+
 * Ubuntu 14+
 * CentOS 7
 * Fedora 25+

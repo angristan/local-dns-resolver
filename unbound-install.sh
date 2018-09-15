@@ -12,7 +12,12 @@ if [ $? -eq 0 ]; then
   lsof -i :53
   echo ""
   echo "Please disable or uninstall it before installing unbound."
-  exit 1
+  while [[ $CONTINUE != "y" && $CONTINUE != "n" ]]; do
+    read -rp "Do you still want to run the script? Unbound might not work... [y/n]: " -e local CONTINUE
+  done
+  if [[ "$CONTINUE" = "n" ]]; then
+    exit 1
+  fi
 fi
 
 if [[ -e /etc/debian_version ]]; then

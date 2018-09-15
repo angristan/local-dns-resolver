@@ -16,7 +16,7 @@ if [ $? -eq 0 ]; then
     read -rp "Do you still want to run the script? Unbound might not work... [y/n]: " -e local CONTINUE
   done
   if [[ "$CONTINUE" = "n" ]]; then
-    exit 1
+    exit 2
   fi
 fi
 
@@ -31,7 +31,7 @@ elif [[ -e /etc/arch-release ]]; then
   OS="arch"
 else
   echo "Looks like you aren't running this installer on a Debian, Ubuntu, CentOS, Fedora or Arch Linux system"
-  exit 4
+  exit 3
 fi
 
 echo ""

@@ -119,12 +119,12 @@ private-address: 127.0.0.0/8
 private-address: ::ffff:0:0/96" >> /etc/unbound/unbound.conf
 fi
 
-
-# Enable service at boot
-systemctl enable unbound
-
-# Restart the service
-systemctl restart unbound
+if pgrep systemd-journal; then
+  systemctl enable unbound
+  systemctl start unbound
+else
+  service unbound restart
+fi
 
 # Allow the modification of the file
 chattr -i /etc/resolv.conf
